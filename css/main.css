@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Header sa naslovom */
+header {
+    width: 100%;
+    height: 10vh;
+    padding-top: 20px;
+    text-align: center;
+    background: linear-gradient(to top, #001000, #032503);
+}
+
+header>h1 {
+    display: inline-block;
+    margin: 0;
+    padding: 0 2%;
+    font-size: 3rem;
+    color: #00A800;
+    box-shadow: 0 3px 4px #007000;
+}
+
+header>h1:hover {
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+/* Game panel */
+
+.game-panel {
+    width: 100%;
+    height: 87vh;
+    background: url("../assets/pozadina.gif");
+}
+
+/* pocetni panel za unos podataka */
+.user-data {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-data label {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #007000;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.user-data input {
+    border: 2px solid #00A800;
+    width: 50rem;
+    font-size: 3rem;
+    background-color: black;
+    color: #00A800;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.user-data button {
+    width: 20rem;
+    font-size: 3rem;
+    color: #00A800;
+    background-color: black;
+    border: 2px solid #00A800;
+}
+
+.user-data button:hover {
+    cursor: pointer;
+    background-color: #00A800;
+    color: black;
+}
+
+/* Control panel */
+.control-panel {
+    width: 100%;
+    height: 0;
+    background: radial-gradient(#001000, #032503);
+    display: flex;
+
+}
+
+
+/* ======================================== */
+/* animation */
+.blink {
+    color: #007000;
+}
