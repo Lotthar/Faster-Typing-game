@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Orbitron', sans-serif;
+    background: black;
 }
 
 /* Header sa naslovom */
@@ -27,11 +28,11 @@ header>h1:hover {
     font-weight: bolder;
 }
 
-/* Game panel */
+/*------------------0Game panel-------------- */
 
 .game-panel {
     width: 100%;
-    height: 87vh;
+    height: 66vh;
     background: url("../assets/pozadina.gif");
 }
 
@@ -45,19 +46,20 @@ header>h1:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-shrink: 1;
 }
 
 .user-data label {
     font-size: 2rem;
     font-weight: bolder;
-    color: #007000;
+    color: #00A800;
     margin-bottom: 30px;
     text-align: center;
 }
 
 .user-data input {
     border: 2px solid #00A800;
-    width: 50rem;
+    width: 60%;
     font-size: 3rem;
     background-color: black;
     color: #00A800;
@@ -65,32 +67,247 @@ header>h1:hover {
     margin-bottom: 15px;
 }
 
+.user-data input:focus {
+    box-shadow: 0 3px 4px #007000;
+    outline: none;
+}
+
 .user-data button {
-    width: 20rem;
-    font-size: 3rem;
+    width: 25%;
+    font-size: 2rem;
     color: #00A800;
     background-color: black;
     border: 2px solid #00A800;
+    margin-bottom: 20px;
 }
 
 .user-data button:hover {
+    font-weight: bolder;
     cursor: pointer;
-    background-color: #00A800;
+    background-color: rgb(1, 77, 1);
     color: black;
+    box-shadow: 0 3px 4px #007000;
 }
 
-/* Control panel */
+/* panel nakon unosa podataka */
+
+.word-container {
+    width: 100%;
+    height: 66vh;
+    position: relative;
+    background: black;
+}
+
+/* -------------------------------- */
+/* animacije rijeci opcije  */
+/* -------------------------------- */
+.word {
+    top: 0;
+    position: absolute;
+    color: green;
+}
+
+.word-animation {
+    -webkit-animation-name: padanje;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+    animation-name: padanje;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+.sec12 {
+    -webkit-animation-duration: 12s;
+    animation-duration: 12s;
+}
+
+.sec9 {
+    -webkit-animation-duration: 9s;
+    animation-duration: 9s;
+}
+
+.sec6 {
+    -webkit-animation-duration: 6s;
+    animation-duration: 6s;
+}
+
+.sec3 {
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+}
+
+/* --------------- Control panel ---------------------*/
 .control-panel {
     width: 100%;
-    height: 0;
+    height: 20vh;
     background: radial-gradient(#001000, #032503);
     display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 5px;
+    color: #00A800;
+    font-size: 25px;
+}
 
+.unos-wrapp,
+.rez-vrijeme-wrapp,
+.vrijeme-brzina-wrapp {
+    display: flex;
+    flex-direction: column;
+}
+
+/* tekstualno polje za igru */
+.unos-wrapp>label {
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.unos-wrapp>input {
+    cursor: pointer;
+    border: 4px solid black;
+    color: black;
+    background-color: #00A800;
+    font-size: 35px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.unos-wrapp>input:focus {
+    box-shadow: 0 3px 4px #007000;
+    outline: none;
+}
+
+/* rezultat */
+
+#rezultat {
+    color: yellow;
+    font-size: 35px;
+}
+
+#vrijeme {
+    color: #77c977;
+}
+
+/* opcija za odabir brzine i vremena */
+.brzina-padanja,
+.vrijeme-igre {
+    cursor: pointer;
+    background: black;
+    border: 2px solid #00A800;
+    font-size: 25px;
+    color: #77c977;
+    margin-bottom: 10px;
+}
+
+.brzina-padanja:focus,
+.vrijeme-igre:focus {
+    box-shadow: 0 3px 4px #007000;
+}
+
+/* restart dugme */
+.btn-restart {
+    cursor: pointer;
+    background: #00A800;
+    color: black;
+    border: 3px solid black;
+    font-weight: bold;
+    width: 150px;
+    height: 100px;
+    font-size: 25px;
+}
+
+.btn-restart:hover {
+    color: #00A800;
+    background: black;
+    border: 3px solid #00A800;
+    box-shadow: 0 3px 4px #007000;
 }
 
 
+/* klasa za skrivanje elemenata; */
+.hidden {
+    display: none;
+}
+
 /* ======================================== */
-/* animation */
+/* ------------ animation ----------------- */
 .blink {
     color: #007000;
+}
+
+/*  efekat padanje */
+@-webkit-keyframes padanje {
+    from {
+        top: 0px;
+    }
+
+    to {
+        top: 460px;
+    }
+}
+
+@keyframes padanje {
+    from {
+        top: 0px;
+    }
+
+    to {
+        top: 450px;
+    }
+}
+
+
+/* -------------------------------------------- */
+/* Media queries  za manje ekrane*/
+@media(max-width: 1350px) {
+    .control-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        padding-top: 25px;
+        height: 35vh;
+        font-size: 25px;
+    }
+
+    .btn-restart {
+        width: 50%;
+        height: 50px;
+    }
+}
+
+/* telefon */
+@media(max-width: 600px) {
+    .user-data input {
+        width: 90%;
+    }
+
+    .control-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        height: 39vh;
+        font-size: 20px;
+    }
+
+    .unos-wrapp,
+    .rez-vrijeme-wrapp,
+    .vrijeme-brzina-wrapp {
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
+
+    .unos-wrapp>input {
+        font-size: 25px;
+    }
+
+    .user-data button {
+        width: 60%;
+    }
+
+    .btn-restart {
+        width: 60%;
+        height: 50px;
+        margin: 0 auto;
+    }
 }

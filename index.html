@@ -22,13 +22,73 @@
 			<!-- panel koji nestaje kad se klikne nova igra -->
 			<div class="user-data">
 				<label for="Username"
-					>-Welcome to Matrix-<br />Enter your username:</label
+					>-Welcome to Matrix-<br />Enter your player name:</label
 				>
-				<input type="text" id="username" required autocomplete="off" />
-				<button type="button">Nova Igra</button>
+				<input
+					form="userForm"
+					type="text"
+					id="username"
+					required
+					autocomplete="off"
+				/>
+				<button id="novaIgra" type="submit">Nova Igra</button>
+				<button id="tabelaRezultata" type="submit">Tabela rezultata</button>
 			</div>
+			<!-- --------------------------------- -->
+			<!-- prikaz za vizuelizaciju pravljenja rijeci -->
+			<!-- <div class="word-container">
+				<div class="word word-animation sec12">Proba</div>
+				<div class="word word-animation sec9">Proba</div>
+				<div class="word word-animation sec12">Proba</div>
+				<div class="word word-animation sec12">Proba</div>
+			</div> -->
 		</div>
 		<!-- Panel za kontrole -->
-		<div class="control-panel"></div>
+		<div id="controlPanel" class="hidden">
+			<div class="unos-wrapp">
+				<label for="unos">Unosite rijeci koje vidite + ENTER:</label>
+				<input
+					id="unos"
+					class="unosTekst"
+					type="text"
+					autocomplete="false"
+					autofocus
+				/>
+			</div>
+
+			<div class="rez-vrijeme-wrapp">
+				<div>
+					<label>REZULTAT:</label>
+					<span id="rezultat"></span>
+				</div>
+				<div>
+					<label>Vrijeme:</label>
+					<span id="vrijeme">30</span>
+				</div>
+			</div>
+
+			<div class="vrijeme-brzina-wrapp">
+				<div>
+					<label for="brzinaPad">Odaberi brzinu:</label>
+					<select id="brzinaPad" class="brzina-padanja">
+						<option value="12">x1</option>
+						<option value="9">x2</option>
+						<option value="6">x3</option>
+						<option value="3">x4</option>
+					</select>
+				</div>
+
+				<div>
+					<label for="vrijemeIgre">Odaberi vrijeme:</label>
+					<select id="vrijemeIgre" class="vrijeme-igre">
+						<option value="3000">30sec</option>
+						<option value="6000">60sec</option>
+						<option value="9000">90sec</option>
+						<option value="12000">120sec</option>
+					</select>
+				</div>
+			</div>
+			<button type="button" class="btn-restart">RESTART</button>
+		</div>
 	</body>
 </html>
