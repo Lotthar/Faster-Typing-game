@@ -3,39 +3,33 @@ require_once 'connection.php';
 header('Content-type:application/json;charset=utf-8');
 http_response_code(200);
 // update rezultata odredjenog igraca
-function updatePlayerScore()
+function newPlayer()
 {
     global $db, $stmt;
     $ime = getParam("naziv", null, false);
     $rezultat = getParam("rezultat", null, false);
     $vrijeme = getParam("vrijeme", null, false);
     $db = getConnection();
-    $sql = "Update takmicar set rezultat=?,vrijeme=? where ime=?";
+    $sql = "Insert into takmicar(ime,rezultat,vrijeme) values (?,?,?)";
     try {
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(1, $rezultat, PDO::PARAM_INT);
-        $stmt->bindParam(2, $vrijeme, PDO::PARAM_STR, 10);
-        $stmt->bindParam(3, $ime, PDO::PARAM_STR, 50);
+        $stmt->bindParam(1, $ime, PDO::PARAM_STR, 50);
+        $stmt->bindParam(2, $rezultat, PDO::PARAM_INT);
+        $stmt->bindParam(3, $vrijeme, PDO::PARAM_STR, 10);
         $stmt->execute();
     } catch (PDOException $e) {
         return ["status" => -5, "poruka" => "Greska pri stvaranju novog igraca!\n $e"];
     }
 }
 // Najbolji rezultati
-
-// -------------------------------------------------
-function newPlayer()
+function bestScores()
 {
-    global $db, $stmt;
-    $ime = getParam("naziv", null, false);
-    $db = getConnection();
-    $sql = "Insert into takmicar(ime) values (?)";
+    $sql = "select * from takmicar order by rezultat desc;";
     try {
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(1, $ime, PDO::PARAM_STR, 50);
-        $stmt->execute();
+        $rez = arrayQuery($sql);
+        return $rez;
     } catch (PDOException $e) {
-        return ["status" => -5, "poruka" => "Greska pri stvaranju novog igraca! \n $e"];
+        return ["status" => -5, "poruka" => "Greska pri stvaranju novog igraca!\n $e"];
     }
 }
 // --------------------------------------------------
@@ -46,8 +40,6 @@ function api()
         switch ($_REQUEST["method"]) {
             case "newPlayer":
                 return newPlayer();
-            case "updateScore":
-                return updatePlayerScore();
             case "bestScores":
                 return bestScores();
             default:

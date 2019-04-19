@@ -34,7 +34,7 @@
 						autocomplete="off"
 					/>
 					<button id="novaIgra" type="button">New Game</button>
-					<button id="tabelaRezultata" type="button">Score Table</button>
+					<button id="tabelaRezultata" type="button">Highest Scores</button>
 				</div>
 				<!-- --------------------------------- -->
 				<!-- prikaz za vizuelizaciju pravljenja rijeci -->
@@ -60,6 +60,10 @@
 					<div>
 						<label>Remaining time:</label>
 						<span id="vrijeme">30</span>
+					</div>
+					<div>
+						<label>Current Best Score:</label>
+						<span id="currentBestScore">0</span>
 					</div>
 				</div>
 
@@ -88,39 +92,26 @@
 			</div>
 		</div>
 		<!-- Modal obavjestenja -->
-		<div id="modalContainer" class="hidden">
-			<div id="tabelaModal" class="tabela-modal">
+		<div id="scoreModalContainer" class="hidden">
+			<div class="score-modal">
 				<!-- limitirati da vraca zadnjih 7 rezultata -->
 				<div class="player-names">
 					<h1>Player:</h1>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
 				</div>
 				<div class="player-score">
 					<h1>Score:</h1>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
 				</div>
 				<div class="player-speed">
 					<h1>Speed:</h1>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
-					<h3>Test</h3>
 				</div>
+			</div>
+		</div>
+		<!-- -------------------------------------- -->
+		<!-- Modal alert -->
+		<div id="alertModalContainer" class="hidden">
+			<div class="alert-modal">
+				<h1>YOU DIDN'T ENTER YOUR PLAYER NAME!</h1>
+				<h1>PLEASE ENTER PLAYER NAME!</h1>
 			</div>
 		</div>
 	</body>

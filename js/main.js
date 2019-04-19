@@ -5,6 +5,7 @@ var odbrojavanje;
 var doKraja;
 var rijecId;
 var currentUser;
+var currentUserResults = [];
 var rijeci;
 var vidjljiveRijeci = [];
 var bojeRijeci = [
@@ -29,6 +30,7 @@ setInterval(() => {
 // -----------------------------------------------
 //Reload the page on logo
 document.querySelector("header h1").addEventListener("click", () => {
+	noviKorisnik();
 	location.reload();
 });
 //Ucitavanje rijeci za igricu
@@ -44,16 +46,37 @@ function loadWords(callback) {
 	req.send();
 }
 // -----------------------------------------------
+//rezultat sa najvecim brojem bodova
+function maxCurrentResult(nizRezultata) {
+	let max = 0;
+	for (let e of nizRezultata) {
+		if (max < e) max = e;
+	}
+	return max;
+}
+// -----------------------------------------------
 // slanje zahtjeva za unos novog korisnika
-function noviKorisnik(naziv) {
+
+function noviKorisnik() {
+	if (!currentUser) return;
+	let rezultat = "" + maxCurrentResult(currentUserResults);
+	let vrijeme = parseInt(document.querySelector("#vrijemeIgre").value) / 1000;
+	vrijeme = "" + vrijeme + " seconds";
 	let req = new XMLHttpRequest();
-	let url = "../FasterTypingGame/php/api.php?method=newPlayer&naziv=" + naziv;
+	let url =
+		"../FasterTypingGame/php/api.php?method=newPlayer&naziv=" +
+		currentUser +
+		"&rezultat=" +
+		rezultat +
+		"&vrijeme=" +
+		vrijeme;
 	req.open("POST", url, true);
 	req.send();
+	currentUserResults = [];
 }
 // -----------------------------------------------
 // kreiranje blank panela nakon unosa korisnika
-function blankPanel(nazivIgraca) {
+function blankPanel() {
 	let gamePanel = document.querySelector(".game-panel");
 	let controlPanel = document.querySelector("#controlPanel");
 	gamePanel.innerHTML = "";
@@ -61,22 +84,27 @@ function blankPanel(nazivIgraca) {
 	gamePanel.style.backgroundColor = "black";
 	controlPanel.classList.remove("hidden");
 	controlPanel.classList.add("control-panel");
-	noviKorisnik(nazivIgraca);
 	loadWords(function(rez) {
 		rijeci = rez.split("\n");
 	});
 }
 // -----------------------------------------------
 // *****************NOVA IGRA ********************
+// Nije unijet korisnik
+function alertModal() {
+	let alertModalContainer = document.querySelector("#alertModalContainer");
+	alertModalContainer.classList.remove("hidden");
+	alertModalContainer.classList.add("modal-container");
+}
 // kreiranje panela za igru nakon klika na novu igru
 document.querySelector("#novaIgra").addEventListener("click", () => {
 	let nazivIgraca = document.querySelector(".user-data input").value;
 	currentUser = nazivIgraca;
 	if (!nazivIgraca) {
-		alert("Niste unijeli ime igraca!"); //zamijeniti modalom
-		location.reload();
+		alertModal(); //zamijeniti modalom
+		return;
 	}
-	blankPanel(nazivIgraca);
+	blankPanel();
 	padajuceRijeci();
 });
 // -----------------------------------------------
@@ -91,7 +119,6 @@ function padajuceRijeci() {
 	doKraja = document.querySelector("#vrijemeIgre").value;
 	doKraja = parseInt(doKraja) / 1000;
 	let odabranaBrzina = document.querySelector("#brzinaPad").value;
-	let brzinaValue = parseInt(odabranaBrzina) * 1000;
 	rijecId = 1;
 	padanjeSpeed = 600;
 	odbrojavanje = setInterval(tajming, 1000);
@@ -140,7 +167,7 @@ function rijecRemove(event) {
 	vidjljiveRijeci.splice(indeksVidljiv, 1);
 }
 // --------------------------------------------------------------
-//tajmer za odbrojavanje partije
+//*************** */tajmer za odbrojavanje partije***********
 function tajming() {
 	let tajmer = document.querySelector("#vrijeme");
 	if (doKraja == 0) {
@@ -152,11 +179,13 @@ function tajming() {
 		// pozvati f-ju nakon kraja igre da vrati modal koji ce
 		// bude tabela rezultata sa iz baze
 		document.querySelector(".game-panel").innerHTML = "";
-		let rezultat = document.querySelector("#rezultat").textContent;
-		sacuvatiRezultat(rezultat);
-		rezultat.textContent = "0";
-		najboljiRezultati();
-		return;
+		//da se prvo ucitaju u listu pa da se tek onda izabere
+		let newRezultat = document.querySelector("#rezultat").textContent;
+		console.log(parseInt(newRezultat));
+		currentUserResults.push(parseInt(newRezultat));
+		document.querySelector("#currentBestScore").textContent = maxCurrentResult(
+			currentUserResults
+		);
 	} else {
 		if (doKraja <= 5) {
 			tajmer.style.color = "red";
@@ -217,39 +246,63 @@ function updateRezultat(uneseniTekst) {
 
 // **********MODAL TABELA************************
 function najboljiRezultati() {
-	let modalContainer = document.querySelector("#modalContainer");
-	modalContainer.classList.remove("hidden");
-	modalContainer.classList.add("modal-container");
+	let scoreModalContainer = document.querySelector("#scoreModalContainer");
+	scoreModalContainer.classList.remove("hidden");
+	scoreModalContainer.classList.add("modal-container");
 }
 // otvaranje modala
 document.querySelector("#tabelaRezultata").addEventListener("click", () => {
 	najboljiRezultati();
 });
 // uklanjanje modala na klik
-document.querySelector("#modalContainer").addEventListener("click", () => {
-	let modalContainer = document.querySelector("#modalContainer");
-	modalContainer.classList.remove("modal-container");
-	modalContainer.classList.add("hidden");
+document.querySelector("#scoreModalContainer").addEventListener("click", () => {
+	let scoreModalContainer = document.querySelector("#scoreModalContainer");
+	scoreModalContainer.classList.remove("modal-container");
+	scoreModalContainer.classList.add("hidden");
 });
-
+document.querySelector("#alertModalContainer").addEventListener("click", () => {
+	let alertModalContainer = document.querySelector("#alertModalContainer");
+	alertModalContainer.classList.remove("modal-container");
+	alertModalContainer.classList.add("hidden");
+});
 // Ucitavanje podtaka u tabelu Modal
-function sacuvatiRezultat(rezultat) {
-	let vrijeme = parseInt(document.querySelector("#vrijemeIgre").value) / 1000;
-	vrijeme = "" + vrijeme + "sec";
+//dovlaci asinhrono sve najbolje rezultate
+function sviNajboljiRez(callback) {
 	let zahtjev = new XMLHttpRequest();
-	let url =
-		"../FasterTypingGame/php/api.php?method=updateScore&naziv=" +
-		currentUser +
-		"&rezultat=" +
-		rezultat +
-		"&vrijeme=" +
-		vrijeme;
-	console.log(url);
-	zahtjev.open("POST", url, true);
+	let url = "../FasterTypingGame/php/api.php?method=bestScores";
+	zahtjev.open("GET", url, true);
+	zahtjev.onreadystatechange = function() {
+		if (this.status == 200 && this.readyState == 4) {
+			callback(JSON.parse(this.responseText));
+		}
+	};
 	zahtjev.send();
 }
-document.addEventListener("DOMContentLoaded", () => {
-	let playerNames = document.querySelector(".player-names");
-	let playerScore = document.querySelector(".player-score");
-	let playerSpeed = document.querySelector(".player-speed");
-});
+// Ucitava modale nakon dom-loada
+document.addEventListener(
+	"DOMContentLoaded",
+	() => {
+		sviNajboljiRez(function(bestScores) {
+			let playerNames = document.querySelector(".player-names");
+			let playerScores = document.querySelector(".player-score");
+			let playerSpeed = document.querySelector(".player-speed");
+			for (let player of bestScores) {
+				//dodaje ime igraca
+				let ime = document.createElement("h3");
+				ime.textContent = player.ime;
+				playerNames.appendChild(ime);
+
+				//dodaje rezultat igraca
+				let rezultat = document.createElement("h3");
+				rezultat.textContent = player.rezultat;
+				playerScores.appendChild(rezultat);
+
+				// dodaje vrijeme igranja
+				let vrijeme = document.createElement("h3");
+				vrijeme.textContent = player.vrijeme;
+				playerSpeed.appendChild(vrijeme);
+			}
+		});
+	},
+	false
+);

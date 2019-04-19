@@ -127,6 +127,7 @@ header>h1:hover {
     animation-iteration-count: 1;
 }
 
+/* klase za animaciju brzine padanja rijeci */
 .sec12 {
     -webkit-animation-duration: 12s;
     animation-duration: 12s;
@@ -156,7 +157,7 @@ header>h1:hover {
     justify-content: space-around;
     align-items: center;
     padding-top: 5px;
-    color: #00A800;
+    color: rgb(4, 182, 4);
     font-size: 25px;
     position: relative;
     z-index: 2;
@@ -196,11 +197,16 @@ header>h1:hover {
 
 #rezultat {
     color: yellow;
-    font-size: 35px;
+    font-size: 28px;
 }
 
 #vrijeme {
     color: #77c977;
+}
+
+#currentBestScore {
+    font-size: 35px;
+    color: rgb(120, 221, 120);
 }
 
 /* opcija za odabir brzine i vremena */
@@ -253,7 +259,8 @@ header>h1:hover {
     background-color: rgba(0, 0, 0, 0.92);
 }
 
-.tabela-modal {
+.score-modal,
+.alert-modal {
     height: 70%;
     width: 90%;
     -webkit-box-shadow: 0px 0px 17px 11px #007000;
@@ -264,13 +271,19 @@ header>h1:hover {
     align-items: flex-start;
 }
 
-.tabela-modal div {
+.alert-modal {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.score-modal div {
     margin-top: 2%;
     border: 2px dashed #007000;
     text-align: center;
 }
 
-.tabela-modal h1 {
+.score-modal h1 {
     margin-top: 0;
     font-size: 40px;
     border: 2px outset #007000;
@@ -279,9 +292,28 @@ header>h1:hover {
     box-shadow: 0px 0px 17px 6px #007000;
 }
 
-.tabela-modal h3 {
+.score-modal h3 {
     padding-bottom: 3px;
     border-bottom: 2px dashed #007000;
+}
+
+.player-names {
+    background: rgba(0, 125, 0, 0.267);
+    color: black;
+    border: 2px dashed black;
+}
+
+.player-names h1 {
+    background: black;
+    color: #00A800;
+}
+
+.player-score h3 {
+    color: yellow;
+}
+
+.player-speed h3 {
+    color: #77c977;
 }
 
 /* ********************************************** */
@@ -377,18 +409,18 @@ header>h1:hover {
         margin: 0 auto;
     }
 
-    .tabela-modal {
+    .score-modal {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         height: 90%;
     }
 
-    .tabela-modal h1 {
+    .score-modal h1 {
         font-size: 20px;
     }
 
-    .tabela-modal div {
+    .score-modal div {
         margin: 0 auto;
     }
 }
