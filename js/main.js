@@ -218,7 +218,10 @@ document.querySelector("#unos").addEventListener("keypress", event => {
 		let nizRijec;
 		for (let indeks = 0; indeks < vidjljiveRijeci.length; indeks++) {
 			nizRijec = vidjljiveRijeci[indeks];
-			if (nizRijec.textContent.trim() == uneseniTekst.trim()) {
+			if (
+				nizRijec.textContent.trim().toLowerCase() ==
+				uneseniTekst.trim().toLowerCase()
+			) {
 				let elem = document.getElementById(nizRijec.id);
 				elem.classList.add("score-effect");
 				elem.style.color = "yellow";
