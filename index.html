@@ -10,85 +10,118 @@
 		/>
 		<link rel="stylesheet" href="css/main.css" />
 		<script src="js/main.js" defer></script>
-		<title>FasterTypingMatrix</title>
+		<title>FasterTypingGame</title>
 	</head>
 	<body>
-		<!-- Naslov igre -->
-		<header>
-			<h1>The Matrix</h1>
-		</header>
-		<!-- Glavni panel za rijeci -->
-		<div class="game-panel">
-			<!-- panel koji nestaje kad se klikne nova igra -->
-			<div class="user-data">
-				<label for="Username"
-					>-Welcome to Matrix-<br />Enter your player name:</label
-				>
-				<input
-					form="userForm"
-					type="text"
-					id="username"
-					required
-					autocomplete="off"
-				/>
-				<button id="novaIgra" type="submit">Nova Igra</button>
-				<button id="tabelaRezultata" type="submit">Tabela rezultata</button>
+		<!-- kontejner cijelog sadrzaja zbog modala -->
+		<div class="container">
+			<!-- Naslov igre -->
+			<header>
+				<h1>The Matrix</h1>
+			</header>
+			<!-- Glavni panel za rijeci -->
+			<div class="game-panel">
+				<!-- panel koji nestaje kad se klikne nova igra -->
+				<div class="user-data">
+					<label for="Username"
+						>-Welcome to Matrix-<br />Enter your player name:</label
+					>
+					<input
+						form="userForm"
+						type="text"
+						id="username"
+						required
+						autocomplete="off"
+					/>
+					<button id="novaIgra" type="button">New Game</button>
+					<button id="tabelaRezultata" type="button">Score Table</button>
+				</div>
+				<!-- --------------------------------- -->
+				<!-- prikaz za vizuelizaciju pravljenja rijeci -->
 			</div>
-			<!-- --------------------------------- -->
-			<!-- prikaz za vizuelizaciju pravljenja rijeci -->
-			<!-- <div class="word-container">
-				<div class="word word-animation sec12">Proba</div>
-				<div class="word word-animation sec9">Proba</div>
-				<div class="word word-animation sec12">Proba</div>
-				<div class="word word-animation sec12">Proba</div>
-			</div> -->
+			<!-- Panel za kontrole -->
+			<div id="controlPanel" class="hidden">
+				<div class="unos-wrapp">
+					<label for="unos">Type falling words + "ENTER":</label>
+					<input
+						id="unos"
+						class="unosTekst"
+						type="text"
+						autocomplete="false"
+						autofocus
+					/>
+				</div>
+
+				<div class="rez-vrijeme-wrapp">
+					<div>
+						<label>Score:</label>
+						<span id="rezultat">0</span>
+					</div>
+					<div>
+						<label>Remaining time:</label>
+						<span id="vrijeme">30</span>
+					</div>
+				</div>
+
+				<div class="vrijeme-brzina-wrapp">
+					<div>
+						<label for="brzinaPad">Choose speed:</label>
+						<select id="brzinaPad" class="brzina-padanja">
+							<option value="12">x1</option>
+							<option value="9">x2</option>
+							<option value="6">x3</option>
+							<option value="3">x4</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="vrijemeIgre">Choose time:</label>
+						<select id="vrijemeIgre" class="vrijeme-igre">
+							<option value="30000">30sec</option>
+							<option value="60000">60sec</option>
+							<option value="90000">90sec</option>
+							<option value="120000">120sec</option>
+						</select>
+					</div>
+				</div>
+				<button type="button" class="btn-restart">RESTART</button>
+			</div>
 		</div>
-		<!-- Panel za kontrole -->
-		<div id="controlPanel" class="hidden">
-			<div class="unos-wrapp">
-				<label for="unos">Unosite rijeci koje vidite + ENTER:</label>
-				<input
-					id="unos"
-					class="unosTekst"
-					type="text"
-					autocomplete="false"
-					autofocus
-				/>
-			</div>
-
-			<div class="rez-vrijeme-wrapp">
-				<div>
-					<label>REZULTAT:</label>
-					<span id="rezultat"></span>
+		<!-- Modal obavjestenja -->
+		<div id="modalContainer" class="hidden">
+			<div id="tabelaModal" class="tabela-modal">
+				<!-- limitirati da vraca zadnjih 7 rezultata -->
+				<div class="player-names">
+					<h1>Player:</h1>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
 				</div>
-				<div>
-					<label>Vrijeme:</label>
-					<span id="vrijeme">30</span>
+				<div class="player-score">
+					<h1>Score:</h1>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
 				</div>
-			</div>
-
-			<div class="vrijeme-brzina-wrapp">
-				<div>
-					<label for="brzinaPad">Odaberi brzinu:</label>
-					<select id="brzinaPad" class="brzina-padanja">
-						<option value="12">x1</option>
-						<option value="9">x2</option>
-						<option value="6">x3</option>
-						<option value="3">x4</option>
-					</select>
-				</div>
-
-				<div>
-					<label for="vrijemeIgre">Odaberi vrijeme:</label>
-					<select id="vrijemeIgre" class="vrijeme-igre">
-						<option value="3000">30sec</option>
-						<option value="6000">60sec</option>
-						<option value="9000">90sec</option>
-						<option value="12000">120sec</option>
-					</select>
+				<div class="player-speed">
+					<h1>Speed:</h1>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
+					<h3>Test</h3>
 				</div>
 			</div>
-			<button type="button" class="btn-restart">RESTART</button>
 		</div>
 	</body>
 </html>
