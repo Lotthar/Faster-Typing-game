@@ -24,7 +24,7 @@ function newPlayer()
 // Najbolji rezultati
 function bestScores()
 {
-    $sql = "select * from takmicar order by rezultat desc;";
+    $sql = "select * from takmicar order by rezultat desc limit 7;";
     try {
         $rez = arrayQuery($sql);
         return $rez;

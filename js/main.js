@@ -1,4 +1,5 @@
 // globalne promjenjive !!
+var greska = new Audio("assets/errorSound.mp3");
 var padanjeSpeed;
 var pravljenjeRijeci;
 var odbrojavanje;
@@ -45,6 +46,9 @@ function loadWords(callback) {
 	};
 	req.send();
 }
+loadWords(function(rez) {
+	rijeci = rez.split("\n");
+});
 // -----------------------------------------------
 //rezultat sa najvecim brojem bodova
 function maxCurrentResult(nizRezultata) {
@@ -61,7 +65,7 @@ function noviKorisnik() {
 	if (!currentUser) return;
 	let rezultat = "" + maxCurrentResult(currentUserResults);
 	let vrijeme = parseInt(document.querySelector("#vrijemeIgre").value) / 1000;
-	vrijeme = "" + vrijeme + " seconds";
+	vrijeme = "" + vrijeme + " sec";
 	let req = new XMLHttpRequest();
 	let url =
 		"../FasterTypingGame/php/api.php?method=newPlayer&naziv=" +
@@ -84,9 +88,6 @@ function blankPanel() {
 	gamePanel.style.backgroundColor = "black";
 	controlPanel.classList.remove("hidden");
 	controlPanel.classList.add("control-panel");
-	loadWords(function(rez) {
-		rijeci = rez.split("\n");
-	});
 }
 // -----------------------------------------------
 // *****************NOVA IGRA ********************
@@ -162,9 +163,13 @@ function padajuceRijeci() {
 // f-ja za brisanje vidljivih rijeci kada dodju do kraja ekrana
 function rijecRemove(event) {
 	let elem = document.getElementById(event.target.id);
-	elem.parentNode.removeChild(elem);
-	let indeksVidljiv = vidjljiveRijeci.indexOf(elem);
-	vidjljiveRijeci.splice(indeksVidljiv, 1);
+	try {
+		elem.parentNode.removeChild(elem);
+		let indeksVidljiv = vidjljiveRijeci.indexOf(elem);
+		vidjljiveRijeci.splice(indeksVidljiv, 1);
+	} catch {
+		greska.play();
+	}
 }
 // --------------------------------------------------------------
 //*************** */tajmer za odbrojavanje partije***********
@@ -181,7 +186,6 @@ function tajming() {
 		document.querySelector(".game-panel").innerHTML = "";
 		//da se prvo ucitaju u listu pa da se tek onda izabere
 		let newRezultat = document.querySelector("#rezultat").textContent;
-		console.log(parseInt(newRezultat));
 		currentUserResults.push(parseInt(newRezultat));
 		document.querySelector("#currentBestScore").textContent = maxCurrentResult(
 			currentUserResults
@@ -212,28 +216,33 @@ document.querySelector("#vrijemeIgre").addEventListener("change", restartGame);
 // --------------------------------------------------------------
 // ----------** racunanje rezultata **---------------------------
 document.querySelector("#unos").addEventListener("keypress", event => {
-	let unos = document.querySelector("#unos");
 	if (event.keyCode === 13) {
+		let unos = document.querySelector("#unos");
+		let ispravanUnos = 0;
 		let uneseniTekst = unos.value;
 		let nizRijec;
 		for (let indeks = 0; indeks < vidjljiveRijeci.length; indeks++) {
 			nizRijec = vidjljiveRijeci[indeks];
-			if (
-				nizRijec.textContent.trim().toLowerCase() ==
-				uneseniTekst.trim().toLowerCase()
-			) {
-				let elem = document.getElementById(nizRijec.id);
-				elem.classList.add("score-effect");
-				elem.style.color = "yellow";
-				setTimeout(() => {
-					elem.parentNode.removeChild(elem);
-				}, 200);
-				padanjeSpeed += 50 + nizRijec.textContent.length;
-				// elem.parentNode.removeChild(elem);
-				vidjljiveRijeci.splice(indeks, 1);
-				updateRezultat(uneseniTekst);
-			}
+			try {
+				if (
+					nizRijec.textContent.trim().toLowerCase() ==
+					uneseniTekst.trim().toLowerCase()
+				) {
+					ispravanUnos = 1;
+					let elem = document.getElementById(nizRijec.id);
+					elem.classList.add("score-effect");
+					elem.style.color = "yellow";
+					setTimeout(() => {
+						elem.parentNode.removeChild(elem);
+					}, 200);
+					padanjeSpeed += 50 + nizRijec.textContent.length;
+					// elem.parentNode.removeChild(elem);
+					vidjljiveRijeci.splice(indeks, 1);
+					updateRezultat(uneseniTekst);
+				}
+			} catch {}
 		}
+		if (ispravanUnos === 0) greska.play();
 		unos.value = "";
 	}
 });
