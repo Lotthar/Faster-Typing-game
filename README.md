@@ -47,4 +47,6 @@
 
 ![HighScore Table](https://i.imgur.com/HvjsUML.png)
 
+## NOTE!
+   .sql file in the repository is a migration file for MySql database used to store high scores of players
 
