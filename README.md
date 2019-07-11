@@ -1,4 +1,4 @@
-# Faster-Typing-game
+                                                 # The Matrix Typing Game
 
 ## Game for practicing and testing ones typing speed, theme is based on "the Matrix" movies
 
