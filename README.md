@@ -4,9 +4,9 @@
 
 ###Game represents simple software implementation with different design using *HTML5,CSS(FLexbox),JS*.The evidence is also being taken for the current *New Game* instance, about *Player name* and his score up until he resets the game, after which it is neccessary to enter new name for the player. Game also keeps track of the best scores that where played.
 
-####**GAME OPTIONS:**
+### **GAME OPTIONS:**
   
- - Speed options:
+#### - Speed options:
       * 1x
       * 2x
       * 3x
@@ -19,7 +19,7 @@
       * 90sec
       * 120sec
       
-####**RULES:**
+#### **RULES:**
 
  - Inside the rectangle for typing, enter any word that you currently see on 
    the word dropdown screen
