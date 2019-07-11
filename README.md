@@ -21,7 +21,7 @@
       * 90sec
       * 120sec
       
-#### **RULES:**
+### - **RULES:**
 
  - Inside the rectangle for typing, enter any word that you currently see on 
    the word dropdown screen
