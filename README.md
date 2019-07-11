@@ -4,7 +4,7 @@
 
 ![Home Page](https://i.imgur.com/UoRYWof.png)
 
-### Game represents simple software implementation with different design using *HTML5,CSS(FLexbox),JS*.The evidence is also being taken for the current *New Game* instance, about *Player name* and his score up until he resets the game, after which it is neccessary to enter new name for the player. Game also keeps track of the best scores that where played.
+#### *Game represents simple software implementation with different design using *HTML5,CSS(FLexbox),JS* .The evidence is also being taken for the current *New Game* instance, about *Player name* and his score up until he resets the game, after which it is neccessary to enter new name for the player. Game also keeps track of the best scores that where played.*
 
 ### **GAME OPTIONS:**
 
