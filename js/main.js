@@ -1,4 +1,4 @@
-// globalne promjenjive !!
+// globalne promjenjive !! --> !!!ZAMIJENITI!!
 var greska = new Audio("assets/errorSound.mp3");
 var padanjeSpeed;
 var pravljenjeRijeci;
@@ -168,7 +168,7 @@ function rijecRemove(event) {
 		let indeksVidljiv = vidjljiveRijeci.indexOf(elem);
 		vidjljiveRijeci.splice(indeksVidljiv, 1);
 	} catch {
-		greska.play();
+		greska.play(); //pusta zvuk kad se ukuca rijec koja nije na ekranu
 	}
 }
 // --------------------------------------------------------------
